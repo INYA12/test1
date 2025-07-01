@@ -203,7 +203,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-white border-b border-[#fafafc] sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <div className="flex items-center space-x-3">
@@ -211,12 +211,52 @@ export default function Dashboard() {
                   <Bot className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-semibold text-gray-900">Geo AI</h1>
-                  <p className="text-xs text-gray-500">{siteDomain} connected</p>
+                  <h1 className="text-lg sm:text-xl font-semibold text-gray-900">Geo AI</h1>
+                  <p className="text-xs text-gray-500 hidden sm:block">{siteDomain} connected</p>
                 </div>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+            
+            {/* Mobile View Switcher */}
+            <div className="lg:hidden flex items-center space-x-2">
+              <div className="flex items-center bg-gray-50 rounded-lg p-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setCurrentView('overview')}
+                  className={`px-2 py-1 text-xs ${
+                    currentView === 'overview'
+                      ? 'bg-gray-100 text-gray-900 font-medium border border-[#fafafc]'
+                      : 'text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  Overview
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setCurrentView('analytics')}
+                  className={`px-2 py-1 text-xs ${
+                    currentView === 'analytics'
+                      ? 'bg-gray-100 text-gray-900 font-medium border border-[#fafafc]'
+                      : 'text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  <BarChart3 className="w-3 h-3 mr-1" />
+                  Analytics
+                </Button>
+              </div>
+              {/* Mobile AI Button */}
+              <Button
+                size="sm"
+                className="bg-black hover:bg-gray-800 text-white px-3 py-2"
+              >
+                <Sparkles className="w-4 h-4" />
+              </Button>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-3">
               <div className="flex items-center bg-gray-50 rounded-lg p-1">
                 <Button
                   variant="ghost"
@@ -261,27 +301,27 @@ export default function Dashboard() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-6 py-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
         {currentView === 'analytics' ? (
           <Analytics />
         ) : (
           <>
         {/* Welcome Header */}
-        <section className="py-24 bg-dot-grid mb-12">
+        <section className="py-12 sm:py-24 bg-dot-grid mb-8 sm:mb-12">
           <div className="text-center mb-8">
-            <h1 className="text-5xl font-semibold text-gray-900 mb-6">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-semibold text-gray-900 mb-4 sm:mb-6 px-4">
               Your site is successfully connected!
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
               Analyzing the visibility of <strong>{siteDomain}</strong> in AI search. Get personalized recommendations for improvement.
             </p>
           </div>
         </section>
 
-        {/* AI Platform Analysis - простая таблица как в Attio */}
-        <section className="py-8 mb-12">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">AI Platform Analysis</h2>
+        {/* AI Platform Analysis */}
+        <section className="py-4 sm:py-8 mb-8 sm:mb-12">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">AI Platform Analysis</h2>
             <div className="flex items-center space-x-2">
               <Badge variant="outline" className="text-xs">4 platforms</Badge>
             </div>
@@ -289,116 +329,238 @@ export default function Dashboard() {
           
           <Card className="attio-card">
             <CardContent className="p-0">
-              {/* Table Header */}
-              <div className="grid grid-cols-5 gap-4 p-4 border-b bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wide">
-                <div>Platform</div>
-                <div>Queries Analyzed</div>
-                <div>Coverage</div>
-                <div>Visibility Score</div>
-                <div>Status</div>
-              </div>
-              
-              {/* Table Rows */}
-              <div className="divide-y">
-                <div className="grid grid-cols-5 gap-4 p-4 items-center hover:bg-gray-50 transition-colors">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="font-medium text-gray-900">ChatGPT</span>
+              {/* Desktop Table */}
+              <div className="hidden md:block">
+                {/* Table Header */}
+                <div className="grid grid-cols-5 gap-4 p-4 border-b bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wide">
+                  <div>Platform</div>
+                  <div>Queries Analyzed</div>
+                  <div>Coverage</div>
+                  <div>Visibility Score</div>
+                  <div>Status</div>
+                </div>
+                
+                {/* Table Rows */}
+                <div className="divide-y">
+                  <div className="grid grid-cols-5 gap-4 p-4 items-center hover:bg-gray-50 transition-colors">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="font-medium text-gray-900">ChatGPT</span>
+                    </div>
+                    <div className="text-sm text-gray-600">1,247</div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="w-[68%] h-full bg-green-500"></div>
+                      </div>
+                      <span className="text-sm font-medium">68%</span>
+                    </div>
+                    <div className="text-sm text-gray-900">High</div>
+                    <Badge className="w-fit bg-green-50 text-green-700 border-green-200">Good</Badge>
                   </div>
-                  <div className="text-sm text-gray-600">1,247</div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+
+                  <div className="grid grid-cols-5 gap-4 p-4 items-center hover:bg-gray-50 transition-colors">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <span className="font-medium text-gray-900">Perplexity</span>
+                    </div>
+                    <div className="text-sm text-gray-600">567</div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="w-[71%] h-full bg-blue-500"></div>
+                      </div>
+                      <span className="text-sm font-medium">71%</span>
+                    </div>
+                    <div className="text-sm text-gray-900">High</div>
+                    <Badge className="w-fit bg-green-50 text-green-700 border-green-200">Good</Badge>
+                  </div>
+
+                  <div className="grid grid-cols-5 gap-4 p-4 items-center hover:bg-gray-50 transition-colors">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <span className="font-medium text-gray-900">Gemini</span>
+                    </div>
+                    <div className="text-sm text-gray-600">810</div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="w-[52%] h-full bg-blue-500"></div>
+                      </div>
+                      <span className="text-sm font-medium">52%</span>
+                    </div>
+                    <div className="text-sm text-gray-900">Medium</div>
+                    <Badge className="w-fit bg-blue-50 text-blue-700 border-blue-200">Fair</Badge>
+                  </div>
+
+                  <div className="grid grid-cols-5 gap-4 p-4 items-center hover:bg-gray-50 transition-colors">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      <span className="font-medium text-gray-900">Claude</span>
+                    </div>
+                    <div className="text-sm text-gray-600">623</div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="w-[45%] h-full bg-red-500"></div>
+                      </div>
+                      <span className="text-sm font-medium">45%</span>
+                    </div>
+                    <div className="text-sm text-gray-900">Low</div>
+                    <Badge className="w-fit bg-red-50 text-red-700 border-red-200">Needs work</Badge>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile Cards */}
+              <div className="md:hidden divide-y">
+                <div className="p-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="font-medium text-gray-900">ChatGPT</span>
+                    </div>
+                    <Badge className="bg-green-50 text-green-700 border-green-200">Good</Badge>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <div className="text-gray-500 text-xs">Queries</div>
+                      <div className="font-medium">1,247</div>
+                    </div>
+                    <div>
+                      <div className="text-gray-500 text-xs">Visibility</div>
+                      <div className="font-medium">High</div>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span className="text-gray-500">Coverage</span>
+                      <span className="font-medium">68%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
                       <div className="w-[68%] h-full bg-green-500"></div>
                     </div>
-                    <span className="text-sm font-medium">68%</span>
                   </div>
-                  <div className="text-sm text-gray-900">High</div>
-                  <Badge className="w-fit bg-green-50 text-green-700 border-green-200">Good</Badge>
                 </div>
 
-                <div className="grid grid-cols-5 gap-4 p-4 items-center hover:bg-gray-50 transition-colors">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <span className="font-medium text-gray-900">Perplexity</span>
+                <div className="p-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <span className="font-medium text-gray-900">Perplexity</span>
+                    </div>
+                    <Badge className="bg-green-50 text-green-700 border-green-200">Good</Badge>
                   </div>
-                  <div className="text-sm text-gray-600">567</div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <div className="text-gray-500 text-xs">Queries</div>
+                      <div className="font-medium">567</div>
+                    </div>
+                    <div>
+                      <div className="text-gray-500 text-xs">Visibility</div>
+                      <div className="font-medium">High</div>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span className="text-gray-500">Coverage</span>
+                      <span className="font-medium">71%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
                       <div className="w-[71%] h-full bg-blue-500"></div>
                     </div>
-                    <span className="text-sm font-medium">71%</span>
                   </div>
-                  <div className="text-sm text-gray-900">High</div>
-                  <Badge className="w-fit bg-green-50 text-green-700 border-green-200">Good</Badge>
                 </div>
 
-                <div className="grid grid-cols-5 gap-4 p-4 items-center hover:bg-gray-50 transition-colors">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <span className="font-medium text-gray-900">Gemini</span>
+                <div className="p-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <span className="font-medium text-gray-900">Gemini</span>
+                    </div>
+                    <Badge className="bg-blue-50 text-blue-700 border-blue-200">Fair</Badge>
                   </div>
-                  <div className="text-sm text-gray-600">810</div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <div className="text-gray-500 text-xs">Queries</div>
+                      <div className="font-medium">810</div>
+                    </div>
+                    <div>
+                      <div className="text-gray-500 text-xs">Visibility</div>
+                      <div className="font-medium">Medium</div>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span className="text-gray-500">Coverage</span>
+                      <span className="font-medium">52%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
                       <div className="w-[52%] h-full bg-blue-500"></div>
                     </div>
-                    <span className="text-sm font-medium">52%</span>
                   </div>
-                  <div className="text-sm text-gray-900">Medium</div>
-                  <Badge className="w-fit bg-blue-50 text-blue-700 border-blue-200">Fair</Badge>
                 </div>
 
-                <div className="grid grid-cols-5 gap-4 p-4 items-center hover:bg-gray-50 transition-colors">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                    <span className="font-medium text-gray-900">Claude</span>
+                <div className="p-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      <span className="font-medium text-gray-900">Claude</span>
+                    </div>
+                    <Badge className="bg-red-50 text-red-700 border-red-200">Needs work</Badge>
                   </div>
-                  <div className="text-sm text-gray-600">623</div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <div className="text-gray-500 text-xs">Queries</div>
+                      <div className="font-medium">623</div>
+                    </div>
+                    <div>
+                      <div className="text-gray-500 text-xs">Visibility</div>
+                      <div className="font-medium">Low</div>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span className="text-gray-500">Coverage</span>
+                      <span className="font-medium">45%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
                       <div className="w-[45%] h-full bg-red-500"></div>
                     </div>
-                    <span className="text-sm font-medium">45%</span>
                   </div>
-                  <div className="text-sm text-gray-900">Low</div>
-                  <Badge className="w-fit bg-red-50 text-red-700 border-red-200">Needs work</Badge>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Summary Stats - простая строка как в Attio */}
-          <div className="mt-6 grid grid-cols-4 gap-6">
+          {/* Summary Stats */}
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
             <div className="text-center">
-              <div className="text-2xl font-semibold text-gray-900">2,847</div>
-              <div className="text-sm text-gray-500">Total queries</div>
+              <div className="text-xl sm:text-2xl font-semibold text-gray-900">2,847</div>
+              <div className="text-xs sm:text-sm text-gray-500">Total queries</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-semibold text-green-600">1,623</div>
-              <div className="text-sm text-gray-500">Covered</div>
+              <div className="text-xl sm:text-2xl font-semibold text-green-600">1,623</div>
+              <div className="text-xs sm:text-sm text-gray-500">Covered</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-semibold text-red-600">1,224</div>
-              <div className="text-sm text-gray-500">Opportunities</div>
+              <div className="text-xl sm:text-2xl font-semibold text-red-600">1,224</div>
+              <div className="text-xs sm:text-sm text-gray-500">Opportunities</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-semibold text-blue-600">57%</div>
-              <div className="text-sm text-gray-500">Average coverage</div>
+              <div className="text-xl sm:text-2xl font-semibold text-blue-600">57%</div>
+              <div className="text-xs sm:text-sm text-gray-500">Average coverage</div>
             </div>
           </div>
         </section>
 
-        {/* Page Analysis Breakdown - с анимацией анализа */}
-        <div className="mb-12">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-display">Page Analysis</h2>
+        {/* Page Analysis Breakdown */}
+        <div className="mb-8 sm:mb-12">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Page Analysis</h2>
             <Button 
               variant="outline" 
               size="sm" 
               onClick={() => setShowAddPage(!showAddPage)}
-              className="hover:bg-gray-50"
+              className="hover:bg-gray-50 text-xs sm:text-sm"
             >
-              <span className="mr-2">+</span>
+              <span className="mr-1 sm:mr-2">+</span>
               Add Page
             </Button>
           </div>
@@ -407,8 +569,8 @@ export default function Dashboard() {
           {showAddPage && (
             <Card className="attio-card mb-4">
               <CardContent className="p-4">
-                <div className="flex items-center space-x-3">
-                  <div className="flex-1">
+                <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-3">
+                  <div className="flex-1 w-full">
                     <input
                       type="text"
                       placeholder="Enter page URL (e.g., /features, /contact)"
@@ -418,21 +580,24 @@ export default function Dashboard() {
                       onKeyPress={(e) => e.key === 'Enter' && handleAddNewPage()}
                     />
                   </div>
-                  <Button 
-                    size="sm" 
-                    onClick={handleAddNewPage}
-                    disabled={!newPageUrl.trim()}
-                    className="bg-black hover:bg-gray-800 text-white"
-                  >
-                    Analyze
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => setShowAddPage(false)}
-                  >
-                    Cancel
-                  </Button>
+                  <div className="flex space-x-2 w-full sm:w-auto">
+                    <Button 
+                      size="sm" 
+                      onClick={handleAddNewPage}
+                      disabled={!newPageUrl.trim()}
+                      className="bg-black hover:bg-gray-800 text-white flex-1 sm:flex-none"
+                    >
+                      Analyze
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => setShowAddPage(false)}
+                      className="flex-1 sm:flex-none"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -443,72 +608,44 @@ export default function Dashboard() {
               <div className="grid grid-cols-1 divide-y">
                 {pageAnalysis.map((page,idx) => (
                   <div key={page.page} className="hover:bg-gray-50 transition-colors reveal" style={{animationDelay:`${idx*0.05+0.2}s`}}>
-                    {/* Основная строка */}
-                    <div className="p-6 flex items-center justify-between">
-                      <div className="flex items-center space-x-4 flex-1">
-                        <div className={`w-2 h-2 rounded-full ${page.coverage === 'analyzing' ? 'bg-blue-500 animate-pulse' : getCoverageColor(page.coverage)}`} />
-                        <div>
-                          <div className="flex items-center space-x-2 mb-1">
-                            <code className="text-sm font-mono bg-gray-100 px-2 py-1 rounded text-gray-700">
+                    {/* Mobile Layout */}
+                    <div className="md:hidden p-4">
+                      <div className="flex items-start space-x-3 mb-3">
+                        <div className={`w-2 h-2 rounded-full mt-2 ${page.coverage === 'analyzing' ? 'bg-blue-500 animate-pulse' : getCoverageColor(page.coverage)}`} />
+                        <div className="flex-1">
+                          <div className="flex flex-col space-y-2 mb-2">
+                            <code className="text-sm font-mono bg-gray-100 px-2 py-1 rounded text-gray-700 w-fit">
                               {page.page}
                             </code>
                             {page.coverage !== 'analyzing' && getCoverageBadge(page.coverage)}
                           </div>
                           <h3 className="font-medium text-gray-900">{page.title}</h3>
                           {page.coverage !== 'analyzing' && (
-                            <p className="text-body">{page.queries} AI queries</p>
+                            <p className="text-sm text-gray-500">{page.queries} AI queries</p>
                           )}
                         </div>
-                      </div>
-                      
-                      <div className="flex items-center space-x-4">
-                        {/* Анимация анализа справа */}
-                        {analyzingPage === page.page ? (
-                          <div className="w-80 p-4 bg-blue-50 rounded-md border border-blue-200">
-                            <div className="flex items-center space-x-3">
-                              <div className="w-4 h-4">
-                                <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                              </div>
-                              <div className="flex-1">
-                                <p className="text-sm font-medium text-blue-900">
-                                  {analysisSteps[analysisStep]}
-                                </p>
-                                <div className="mt-2 w-full bg-blue-200 rounded-full h-1.5">
-                                  <div 
-                                    className="bg-blue-500 h-1.5 rounded-full transition-all duration-300"
-                                    style={{width: `${((analysisStep + 1) / analysisSteps.length) * 100}%`}}
-                                  ></div>
-                                </div>
-                              </div>
+                        {page.coverage !== 'analyzing' && (
+                          <div className="text-right">
+                            <span className="text-lg font-semibold text-gray-900">{page.percentage}%</span>
+                            <div className="w-12 h-1 bg-gray-200 rounded-full overflow-hidden mt-1">
+                              <div 
+                                className={`h-full transition-all duration-300 ${
+                                  page.coverage === 'good' ? 'bg-green-500' : 
+                                  page.coverage === 'medium' ? 'bg-blue-500' : 'bg-red-500'
+                                }`}
+                                style={{width: `${page.percentage}%`}}
+                              ></div>
                             </div>
                           </div>
-                        ) : (
-                          <div className="text-right">
-                            {page.coverage !== 'analyzing' ? (
-                              <>
-                                <span className="text-xl font-semibold text-gray-900">{page.percentage}%</span>
-                                <div className="progress-minimal w-16 mt-1">
-                                  <div 
-                                    className={`progress-bar h-full transition-all duration-300 ${
-                                      page.coverage === 'good' ? 'bg-green-500' : 
-                                      page.coverage === 'medium' ? 'bg-blue-500' : 'bg-red-500'
-                                    }`}
-                                    style={{width: `${page.percentage}%`}}
-                                  ></div>
-                                </div>
-                              </>
-                            ) : (
-                              <div className="w-16 text-center">
-                                <div className="text-sm text-gray-500">Analyzing...</div>
-                              </div>
-                            )}
-                          </div>
                         )}
-                        
+                      </div>
+                      
+                      {/* Mobile Action Buttons */}
+                      <div className="flex flex-col space-y-2">
                         {page.coverage === 'poor' && analyzingPage !== page.page && generatingContent !== page.page && (
                           <Button 
                             size="sm"
-                            className="bg-black hover:bg-gray-800 text-white"
+                            className="bg-black hover:bg-gray-800 text-white w-full"
                             onClick={() => handleGenerateContent(page.page, 'improve')}
                           >
                             <Sparkles className="w-4 h-4 mr-2" />
@@ -521,7 +658,7 @@ export default function Dashboard() {
                             variant="outline"
                             size="sm"
                             onClick={() => handleAnalyzePage(page.page)}
-                            className="hover:bg-gray-50 border-gray-300"
+                            className="hover:bg-gray-50 border-gray-300 w-full"
                           >
                             Re-analyze
                           </Button>
@@ -529,9 +666,119 @@ export default function Dashboard() {
                       </div>
                     </div>
 
-                    {/* Анимация генерации GPT */}
+                    {/* Desktop Layout */}
+                    <div className="hidden md:block">
+                      <div className="p-6 flex items-center justify-between">
+                        <div className="flex items-center space-x-4 flex-1">
+                          <div className={`w-2 h-2 rounded-full ${page.coverage === 'analyzing' ? 'bg-blue-500 animate-pulse' : getCoverageColor(page.coverage)}`} />
+                          <div>
+                            <div className="flex items-center space-x-2 mb-1">
+                              <code className="text-sm font-mono bg-gray-100 px-2 py-1 rounded text-gray-700">
+                                {page.page}
+                              </code>
+                              {page.coverage !== 'analyzing' && getCoverageBadge(page.coverage)}
+                            </div>
+                            <h3 className="font-medium text-gray-900">{page.title}</h3>
+                            {page.coverage !== 'analyzing' && (
+                              <p className="text-sm text-gray-500">{page.queries} AI queries</p>
+                            )}
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-4">
+                          {/* Desktop Analysis Animation */}
+                          {analyzingPage === page.page ? (
+                            <div className="w-80 p-4 bg-blue-50 rounded-md border border-blue-200">
+                              <div className="flex items-center space-x-3">
+                                <div className="w-4 h-4">
+                                  <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                                </div>
+                                <div className="flex-1">
+                                  <p className="text-sm font-medium text-blue-900">
+                                    {analysisSteps[analysisStep]}
+                                  </p>
+                                  <div className="mt-2 w-full bg-blue-200 rounded-full h-1.5">
+                                    <div 
+                                      className="bg-blue-500 h-1.5 rounded-full transition-all duration-300"
+                                      style={{width: `${((analysisStep + 1) / analysisSteps.length) * 100}%`}}
+                                    ></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="text-right">
+                              {page.coverage !== 'analyzing' ? (
+                                <>
+                                  <span className="text-xl font-semibold text-gray-900">{page.percentage}%</span>
+                                  <div className="w-16 h-1 bg-gray-200 rounded-full overflow-hidden mt-1">
+                                    <div 
+                                      className={`h-full transition-all duration-300 ${
+                                        page.coverage === 'good' ? 'bg-green-500' : 
+                                        page.coverage === 'medium' ? 'bg-blue-500' : 'bg-red-500'
+                                      }`}
+                                      style={{width: `${page.percentage}%`}}
+                                    ></div>
+                                  </div>
+                                </>
+                              ) : (
+                                <div className="w-16 text-center">
+                                  <div className="text-sm text-gray-500">Analyzing...</div>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          
+                          {page.coverage === 'poor' && analyzingPage !== page.page && generatingContent !== page.page && (
+                            <Button 
+                              size="sm"
+                              className="bg-black hover:bg-gray-800 text-white"
+                              onClick={() => handleGenerateContent(page.page, 'improve')}
+                            >
+                              <Sparkles className="w-4 h-4 mr-2" />
+                              Improve
+                            </Button>
+                          )}
+                          
+                          {page.coverage !== 'analyzing' && analyzingPage !== page.page && generatingContent !== page.page && (
+                            <Button 
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleAnalyzePage(page.page)}
+                              className="hover:bg-gray-50 border-gray-300"
+                            >
+                              Re-analyze
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Mobile Analysis Progress */}
+                    {analyzingPage === page.page && (
+                      <div className="md:hidden px-4 pb-4">
+                        <div className="p-3 bg-blue-50 rounded-md border border-blue-200">
+                          <div className="flex items-center space-x-3 mb-2">
+                            <div className="w-4 h-4">
+                              <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                            <p className="text-sm font-medium text-blue-900">
+                              {analysisSteps[analysisStep]}
+                            </p>
+                          </div>
+                          <div className="w-full bg-blue-200 rounded-full h-1.5">
+                            <div 
+                              className="bg-blue-500 h-1.5 rounded-full transition-all duration-300"
+                              style={{width: `${((analysisStep + 1) / analysisSteps.length) * 100}%`}}
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Generation Progress */}
                     {generatingContent === page.page && (
-                      <div className="px-6 pb-6">
+                      <div className="px-4 md:px-6 pb-4 md:pb-6">
                         <div className="p-4 bg-gray-50 rounded-md border border-gray-200">
                           <div className="flex items-center space-x-3 mb-3">
                             <div className="w-4 h-4">
@@ -551,9 +798,9 @@ export default function Dashboard() {
                       </div>
                     )}
 
-                    {/* Результаты генерации */}
+                    {/* Generated Results */}
                     {generatedResults[page.page] && (
-                      <div className="px-6 pb-6">
+                      <div className="px-4 md:px-6 pb-4 md:pb-6">
                         <div className="p-4 bg-green-50 rounded-md border border-green-200">
                           <div className="flex items-center space-x-2 mb-3">
                             <CheckCircle className="w-4 h-4 text-green-600" />
@@ -580,8 +827,8 @@ export default function Dashboard() {
                               </ul>
                             </div>
 
-                            <div className="flex items-center justify-between pt-2 border-t border-green-200">
-                              <div className="flex items-center space-x-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 border-t border-green-200 space-y-2 sm:space-y-0">
+                              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0">
                                 <div>
                                   <span className="text-sm font-medium text-green-800">AI Score: </span>
                                   <span className="text-lg font-bold text-green-600">{generatedResults[page.page].aiScore}/100</span>
@@ -590,7 +837,7 @@ export default function Dashboard() {
                                   <span className="text-sm text-green-700">{generatedResults[page.page].expectedImpact}</span>
                                 </div>
                               </div>
-                              <Button size="sm" variant="outline" className="border-green-200 text-green-700 hover:bg-green-50">
+                              <Button size="sm" variant="outline" className="border-green-200 text-green-700 hover:bg-green-50 w-full sm:w-auto">
                                 Copy to Clipboard
                               </Button>
                             </div>
@@ -607,17 +854,17 @@ export default function Dashboard() {
 
         {/* Main Action Block */}
         {showMainCard && (
-          <div className="mb-12">
+          <div className="mb-8 sm:mb-12">
             <Card className={`border-red-200 bg-red-50 attio-card ${mainCardDisintegrating ? 'disintegrate' : ''}`}>
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
+                  <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     <AlertTriangle className="w-5 h-5 text-red-600" />
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center justify-between mb-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 space-y-2 sm:space-y-0">
                       <h3 className="text-lg font-semibold text-gray-900">Main Recommendation</h3>
-                      <Badge className="bg-red-500 text-white">
+                      <Badge className="bg-red-500 text-white w-fit">
                         High Priority
                       </Badge>
                     </div>
@@ -638,13 +885,38 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Getting Started timeline (moved to bottom) */}
-        <section className="pt-16 pb-24 bg-gray-50/40">
-           <div className="flex items-center justify-between mb-4 max-w-6xl mx-auto px-6">
-             <h2 className="text-xl font-semibold text-gray-900">Getting Started</h2>
+        {/* Getting Started timeline */}
+        <section className="pt-8 sm:pt-16 pb-12 sm:pb-24 bg-gray-50/40">
+           <div className="flex items-center justify-between mb-4 max-w-6xl mx-auto px-4 sm:px-6">
+             <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Getting Started</h2>
              <Badge className="bg-[#94b9fe] text-white border-0">Step 2 of 3</Badge>
            </div>
-           <div className="relative flex items-center justify-between max-w-6xl mx-auto px-6">
+           
+           {/* Mobile Timeline (Vertical) */}
+           <div className="sm:hidden space-y-4 max-w-6xl mx-auto px-4">
+             {onboardingSteps.map((step, idx) => (
+               <div key={step.step} className="flex items-start space-x-4">
+                 <div className="flex flex-col items-center">
+                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step.status==='completed'?'bg-emerald-500 text-white':step.status==='current'?'bg-[#94b9fe] text-white':'bg-gray-300 text-white'}`}>
+                     {step.step}
+                   </div>
+                   {idx !== onboardingSteps.length - 1 && (
+                     <div className="w-px h-8 bg-gray-300 mt-2"></div>
+                   )}
+                 </div>
+                 <div className="flex-1 pb-6">
+                   <p className="text-sm font-medium text-gray-900 mb-1">{step.title}</p>
+                   <p className="text-xs text-gray-500 mb-2">{step.description}</p>
+                   <Badge variant="outline" className={step.status==='completed'?'border-emerald-200 text-emerald-700':step.status==='current'?'border-[#94b9fe] text-[#94b9fe]':'border-gray-300 text-gray-500'}>
+                     {step.status==='completed'?'Completed':step.status==='current'?'In Progress':'Pending'}
+                   </Badge>
+                 </div>
+               </div>
+             ))}
+           </div>
+
+           {/* Desktop Timeline (Horizontal) */}
+           <div className="hidden sm:block relative flex items-center justify-between max-w-6xl mx-auto px-6">
              {onboardingSteps.map((step, idx) => (
                <div key={step.step} className="flex-1 flex flex-col items-center text-center">
                  {idx !== 0 && (
@@ -660,9 +932,6 @@ export default function Dashboard() {
              ))}
            </div>
         </section>
-
-        {/* Connection banner removed per request */}
-
           </>
         )}
       </main>

@@ -198,3 +198,45 @@
   animation: pixelDisintegrate 2s ease-out forwards;
   overflow: hidden;
 }
+
+/* Mobile progress bars */
+.progress-minimal {
+  height: 4px;
+  background-color: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* Touch friendly buttons on mobile */
+@media (max-width: 640px) {
+  .btn-pill {
+    @apply rounded-full h-11 px-6 transition transform active:translate-y-0.5;
+  }
+}
+
+/* Mobile responsive utilities */
+@media (max-width: 640px) {
+  .chart-shadow {
+    filter: drop-shadow(0 2px 8px rgba(148, 185, 254, 0.1));
+  }
+}
+
+/* Mobile-specific card hover effects */
+@media (hover: hover) {
+  .attio-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+}
+
+@media (hover: none) {
+  .attio-card:active {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transform: translateY(0);
+  }
+}
