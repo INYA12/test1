@@ -886,50 +886,94 @@ export default function Dashboard() {
         )}
 
         {/* Getting Started timeline */}
-        <section className="pt-8 sm:pt-16 pb-12 sm:pb-24 bg-gray-50/40">
-           <div className="flex items-center justify-between mb-4 max-w-6xl mx-auto px-4 sm:px-6">
+        <section className="pt-8 sm:pt-16 pb-12 sm:pb-24 bg-gradient-to-br from-blue-50/30 via-white to-blue-50/20">
+           <div className="flex items-center justify-between mb-4 sm:mb-12 max-w-6xl mx-auto px-4 sm:px-6">
              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Getting Started</h2>
-             <Badge className="bg-[#94b9fe] text-white border-0">Step 2 of 3</Badge>
+             <Badge className="bg-[#94b9fe] text-white border-0 shadow-sm">
+               Step 2 of 3
+             </Badge>
            </div>
            
            {/* Mobile Timeline (Vertical) */}
-           <div className="sm:hidden space-y-4 max-w-6xl mx-auto px-4">
+           <div className="sm:hidden space-y-6 max-w-6xl mx-auto px-4">
              {onboardingSteps.map((step, idx) => (
                <div key={step.step} className="flex items-start space-x-4">
                  <div className="flex flex-col items-center">
-                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step.status==='completed'?'bg-emerald-500 text-white':step.status==='current'?'bg-[#94b9fe] text-white':'bg-gray-300 text-white'}`}>
+                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shadow-lg font-semibold text-sm ${
+                       step.status === 'completed' 
+                         ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white' 
+                         : step.status === 'current' 
+                         ? 'bg-[#94b9fe] text-white' 
+                         : 'bg-white text-gray-400 border-2 border-gray-200'
+                     }`}>
                      {step.step}
                    </div>
                    {idx !== onboardingSteps.length - 1 && (
-                     <div className="w-px h-8 bg-gray-300 mt-2"></div>
+                     <div className="w-0.5 h-10 bg-gradient-to-b from-blue-200 to-blue-300 mt-3"></div>
                    )}
                  </div>
-                 <div className="flex-1 pb-6">
-                   <p className="text-sm font-medium text-gray-900 mb-1">{step.title}</p>
-                   <p className="text-xs text-gray-500 mb-2">{step.description}</p>
-                   <Badge variant="outline" className={step.status==='completed'?'border-emerald-200 text-emerald-700':step.status==='current'?'border-[#94b9fe] text-[#94b9fe]':'border-gray-300 text-gray-500'}>
-                     {step.status==='completed'?'Completed':step.status==='current'?'In Progress':'Pending'}
-                   </Badge>
+                 <div className="flex-1 pb-8">
+                   <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                     <p className="text-sm font-semibold text-gray-900 mb-2">{step.title}</p>
+                     <p className="text-xs text-gray-600 mb-3 leading-relaxed">{step.description}</p>
+                                            <Badge 
+                         className={`${
+                           step.status === 'completed' 
+                             ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-50' 
+                             : step.status === 'current' 
+                             ? 'bg-[#94b9fe]/10 text-[#4c86f8] border border-[#94b9fe]/30 hover:bg-[#94b9fe]/10' 
+                             : 'bg-gray-50 text-gray-500 border border-gray-200 hover:bg-gray-50'
+                         }`}
+                       >
+                       {step.status === 'completed' ? 'Completed' : step.status === 'current' ? 'In Progress' : 'Pending'}
+                     </Badge>
+                   </div>
                  </div>
                </div>
              ))}
            </div>
 
            {/* Desktop Timeline (Horizontal) */}
-           <div className="hidden sm:block relative flex items-center justify-between max-w-6xl mx-auto px-6">
-             {onboardingSteps.map((step, idx) => (
-               <div key={step.step} className="flex-1 flex flex-col items-center text-center">
-                 {idx !== 0 && (
-                   <div className="absolute top-4 -left-1 w-full h-px border-dashed border-gray-300" style={{zIndex:-1}}></div>
-                 )}
-                 <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-2 ${step.status==='completed'?'bg-emerald-500 text-white':step.status==='current'?'bg-[#94b9fe] text-white':'bg-gray-300 text-white'}`}>{step.step}</div>
-                 <p className="text-sm font-medium text-gray-900 mb-1">{step.title}</p>
-                 <p className="text-xs text-gray-500 mb-1 text-center max-w-xs">{step.description}</p>
-                 <Badge variant="outline" className={step.status==='completed'?'border-emerald-200 text-emerald-700':step.status==='current'?'border-[#94b9fe] text-[#94b9fe]':'border-gray-300 text-gray-500'}>
-                   {step.status==='completed'?'Completed':step.status==='current'?'In Progress':'Pending'}
-                 </Badge>
+           <div className="hidden sm:block max-w-5xl mx-auto px-6">
+             <div className="relative">
+               {/* Connecting line with gradient */}
+               <div className="absolute top-5 left-16 right-16 h-1 bg-gradient-to-r from-emerald-300 via-[#94b9fe] to-gray-300 rounded-full"></div>
+               
+               {/* Steps */}
+               <div className="relative flex justify-between">
+                 {onboardingSteps.map((step) => (
+                   <div key={step.step} className="flex flex-col items-center text-center">
+                     {/* Step circle */}
+                     <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg font-semibold transition-transform hover:scale-105 ${
+                       step.status === 'completed' 
+                         ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white' 
+                         : step.status === 'current' 
+                         ? 'bg-[#94b9fe] text-white' 
+                         : 'bg-white text-gray-400 border-2 border-gray-200'
+                     }`}>
+                       {step.step}
+                     </div>
+                     
+                     {/* Step content card */}
+                     <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 max-w-xs hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+                       <h3 className="text-base font-semibold text-gray-900 mb-3">{step.title}</h3>
+                       <p className="text-sm text-gray-600 mb-4 leading-relaxed">{step.description}</p>
+                                                <Badge 
+                           className={`${
+                             step.status === 'completed' 
+                               ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-50 font-medium' 
+                               : step.status === 'current' 
+                               ? 'bg-[#94b9fe]/10 text-[#4c86f8] border border-[#94b9fe]/30 hover:bg-[#94b9fe]/10 font-medium' 
+                               : 'bg-gray-50 text-gray-500 border border-gray-200 hover:bg-gray-50'
+                           }`}
+                         >
+                         {step.status === 'completed' ? 'Completed ✓' : step.status === 'current' ? 'In Progress' : 'Pending'}
+                       </Badge>
+                     </div>
+                   </div>
+                 ))}
                </div>
-             ))}
+             </div>
            </div>
         </section>
           </>
